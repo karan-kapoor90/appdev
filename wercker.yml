@@ -26,13 +26,9 @@ deploy-to-oke:
 
   - bash-template
   - kubectl:
-    name: "Deploy New Image"
+    name: "Apply changes"
     insecure-skip-tls-verify: true
-    command: delete deploy,svc -l app=symposium -n symposium
-  - kubectl:
-    name: "Deploy New Image"
-    insecure-skip-tls-verify: true
-    command: create -f $WERCKER_ROOT/kube-dev.yml -n symposium
+    command: apply -f $WERCKER_ROOT/kube-dev.yml
   - script:
       name: echo paths
       code: |
