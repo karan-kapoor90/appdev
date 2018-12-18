@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hotel
+  labels:
+    app: hotel
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotel
+      commit: ${WERCKER_GIT_COMMIT}
+  template:
+    metadata:
+      labels:
+        app: hotel
+        commit: ${WERCKER_GIT_COMMIT}
+    spec:
+      containers:
+      - name: hotel
+        image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - name: hotel-port
+          containerPort: 80
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotel
+  labels:
+    app: hotel
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  ports:
+  - port: 80
+    nodePort: 30080
+  selector:
+    app: hotel
+  type: NodePort
+---
