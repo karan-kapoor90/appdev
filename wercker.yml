@@ -25,17 +25,14 @@ deploy-to-oke:
   steps:
 
   - bash-template
-  - script:
-      name: cat kubedev
-      code: /
-        echo "$(/pipeline/source/kube-dev.yml)"
   - kubectl:
-    name: "Apply changes"
-    insecure-skip-tls-verify: true
-    command: apply -f $WERCKER_ROOT/kube-dev.yml
+      name: "Apply changes"
+      server: $KUBE_MASTER
+      token: $KUBE_TOKEN 
+      insecure-skip-tls-verify: true
+      command: apply -f $WERCKER_ROOT/kube-dev.yml
   - script:
       name: echo paths
       code: |
         pwd
         ls -ltr
-        cat $WERCKER_ROOT/kube-dev.yml
