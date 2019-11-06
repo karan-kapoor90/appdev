@@ -25,6 +25,10 @@ deploy-to-oke:
   steps:
 
   - bash-template
+  - script:
+      name: cat kubedev
+      code: /
+        cat $WERCKER_ROOT/kube-dev.yml
   - kubectl:
     name: "Apply changes"
     insecure-skip-tls-verify: true
@@ -34,4 +38,4 @@ deploy-to-oke:
       code: |
         pwd
         ls -ltr
-        echo $WERCKER_ROOT
+        cat $WERCKER_ROOT/kube-dev.yml
