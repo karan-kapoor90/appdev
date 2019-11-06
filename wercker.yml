@@ -15,7 +15,6 @@ push-to-release:
         password: $DOCKER_PASSWORD
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         repository: $DOCKER_REPO
-        cmd: node index.js
         ports: "80"
         working-dir: /pipeline/source
 deploy-to-oke:
